@@ -1,0 +1,11 @@
+{
+    "jtech_hx1": {
+        "information": {
+            "authors": "JTECH Performance",
+            "name": "JTECH HX1 Display Unit",
+            "value": 299
+        },
+        "slotType": "jtech_hx"
+        }
+    }
+}

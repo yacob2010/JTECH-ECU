@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JTECH HX3 Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0D10;--bg2:#0e1116;--bg3:#0d1014;--text:#E6E6E6;--dim:#8A8F98;--border:#1E2229;--teal:#00E5A0;--amber:#F0A500;--red:#E84040;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#111;padding:20px;font-family:Inter,sans-serif;}
+.root{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:4px;overflow:hidden;width:520px;}
+.hdr{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;}
+.logo{font-family:Inter,sans-serif;font-weight:500;font-size:12px;color:var(--text);letter-spacing:.08em;}
+.slash{display:inline-block;width:1px;height:13px;background:var(--teal);transform:rotate(20deg);opacity:.7;margin:0 2px;}
+.model{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;}
+.status{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--teal);display:flex;align-items:center;gap:5px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--teal);}
+.tbar{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:stretch;}
+.htab{flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.08em;border-right:1px solid var(--border);cursor:pointer;position:relative;transition:color 160ms;min-width:0;}
+.htab:last-child{border-right:none;}
+.htab.active{color:var(--teal);background:#0b0e13;}
+.htab.active::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--teal);}
+.sstrip{height:40px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 10px;overflow-x:auto;}
+.si{display:flex;flex-direction:column;gap:1px;padding:0 8px;flex-shrink:0;}
+.si:first-child{padding-left:0;}
+.slbl{font-size:8px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.1em;}
+.sval{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:var(--teal);line-height:1;}
+.sval.w{color:var(--amber)}.sval.n{color:var(--text);}
+.ssep{width:1px;height:16px;background:#2a2f38;transform:rotate(20deg);flex-shrink:0;}
+.tabpanel{display:none;}.tabpanel.active{display:flex;flex-direction:column;}
+.body{padding:12px;display:flex;flex-direction:column;gap:10px;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.dash-box{padding:14px 12px;}
+.dash-box .dbv{font-size:28px;}
+.dash-box .dbl{font-size:10px;margin-bottom:6px;}
+.db{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:8px 10px;}
+.db.warn{border-color:var(--amber);}
+.dbl{font-size:9px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.dbv{font-family:"JetBrains Mono",monospace;font-size:20px;font-weight:700;color:var(--teal);line-height:1;}
+.dbv.a{color:var(--amber)}.dbv.d{color:var(--text);font-weight:400;font-size:16px;}
+.rbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:5px;}
+.rbf{height:100%;border-radius:2px;background:var(--teal);transition:width 200ms;}
+.rbf.w{background:var(--amber);}
+/* fuel tab */
+.toolbar{display:flex;align-items:center;gap:8px;padding:12px 12px 0;}
+.mode-btn{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;padding:5px 12px;border-radius:2px;border:1px solid;cursor:pointer;transition:all 160ms;}
+.mode-btn.monitor{background:#002a1f;color:var(--teal);border-color:#005540;}
+.mode-btn.edit{background:#2a1f00;color:var(--amber);border-color:#554000;}
+.tl-sep{width:1px;height:20px;background:#2a2f38;transform:rotate(20deg);flex-shrink:0;margin:0 4px;}
+.map-name{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--dim);}
+.tl-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.tl-hint{font-family:Inter,sans-serif;font-size:10px;color:var(--dim);font-style:italic;}
+.map-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:10px;margin:10px 12px 0;}
+.map-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.map-title{font-size:9px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;}
+.badge{font-size:9px;font-family:"JetBrains Mono",monospace;padding:2px 6px;border-radius:2px;letter-spacing:.05em;}
+.badge.live{background:#002a1f;color:var(--teal);border:1px solid #005540;}
+.badge.edit-badge{background:#2a1f00;color:var(--amber);border:1px solid #554000;}
+.cell-coords{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--dim);}
+.map-toggle-btn{background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--dim);font-family:"JetBrains Mono",monospace;font-size:9px;padding:2px 8px;cursor:pointer;letter-spacing:.05em;}
+.axis-label-row{display:flex;gap:3px;margin-bottom:3px;padding-left:32px;}
+.axl{font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--dim);text-align:center;flex:1;}
+.axl.live-col{color:var(--teal);font-weight:700;}
+.map-row{display:flex;gap:3px;align-items:center;margin-bottom:3px;}
+.row-lbl{font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--dim);width:28px;text-align:right;flex-shrink:0;}
+.cell{flex:1;height:22px;border-radius:1px;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:8px;font-weight:700;border:1px solid transparent;transition:filter 80ms;position:relative;cursor:default;}
+.cell.can-edit{cursor:pointer;}
+.cell.can-edit:hover{filter:brightness(1.3);}
+.cell.selected{border-color:var(--amber)!important;background:#332800!important;color:var(--amber)!important;}
+.cell.live-cell{border-color:var(--teal)!important;}
+.cell-input{width:100%;height:100%;background:transparent;border:none;outline:none;font-family:"JetBrains Mono",monospace;font-size:8px;font-weight:700;color:var(--amber);text-align:center;cursor:text;}
+.v0{background:#0f1a14;color:#1a7a50}.v1{background:#0e2018;color:#20a060}.v2{background:#0c2a1c;color:#28c478}.v3{background:#143020;color:#35d988}.v4{background:#1e3a22;color:#44e896}.v5{background:#2a3a18;color:#88d840}.v6{background:#3a3010;color:#d4a030}.v7{background:#3a2010;color:#e07020;}
+.map-footer{display:flex;gap:16px;align-items:center;margin-top:6px;}
+.mf-legend{font-size:9px;font-family:"JetBrains Mono",monospace;}
+.mf-legend.t{color:var(--teal)}.mf-legend.a{color:var(--amber)}.mf-legend.d{color:var(--dim);margin-left:auto;}
+.edit-bar{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:8px 12px;display:flex;align-items:center;gap:12px;min-height:44px;margin:8px 12px 0;}
+.eb-info{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--dim);}
+.eb-val{font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:700;color:var(--amber);min-width:40px;}
+.eb-input{background:#1a1400;border:1px solid #554000;border-radius:2px;color:var(--amber);font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;width:64px;padding:4px 8px;text-align:center;outline:none;}
+.eb-input:focus{border-color:var(--amber);}
+.eb-hint{font-family:Inter,sans-serif;font-size:10px;color:var(--dim);font-style:italic;}
+.eb-btn{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.06em;padding:4px 10px;border-radius:2px;cursor:pointer;transition:all 120ms;background:#332800;color:var(--amber);border:1px solid #554000;}
+.eb-btn:hover{background:#443200;}
+.eb-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;}
+.gauges{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 12px 12px;}
+.coming-soon{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.cs-title{font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;}
+.cs-sub{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--teal);letter-spacing:.1em;}
+#t-twostep-toggle.on{background:#002a1f;color:var(--teal);border-color:#005540;}
+</style>
+</head>
+<body>
+<div class="root">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <span class="logo">JTECH</span>
+    <span class="slash"></span>
+    <span class="model">HX3</span>
+    <div class="status"><span class="sdot"></span> <span id="status-text">ECU LINK ACTIVE</span></div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tbar">
+    <div class="htab active" data-tab="dash">DASH</div>
+    <div class="htab" data-tab="fuel">FUEL</div>
+    <div class="htab" data-tab="timing">TIMING</div>
+    <div class="htab" data-tab="boost">BOOST</div>
+    <div class="htab" data-tab="safe">SAFE</div>
+    <div class="htab" data-tab="setup">SETUP</div>
+    <div class="htab" data-tab="logs">LOGS</div>
+  </div>
+
+  <!-- SENSOR STRIP (fuel/timing/boost/safe tabs) -->
+  <div class="sstrip" id="sstrip" style="display:none;">
+    <div class="si"><span class="slbl">RPM</span><span class="sval" id="s-rpm">4250</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">TPS</span><span class="sval n" id="s-tps">78%</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">AFR</span><span class="sval" id="s-afr">13.2</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">BOOST</span><span class="sval" id="s-boost">8.4</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">GEAR</span><span class="sval" id="s-gear">3</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">SPD</span><span class="sval n" id="s-spd">67</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">WATER</span><span class="sval n" id="s-water">91</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">OIL</span><span class="sval n" id="s-oil">104</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">OIL P</span><span class="sval n" id="s-oilp">42</span></div>
+  </div>
+
+  <!-- DASH TAB -->
+  <div class="tabpanel active" id="tab-dash">
+    <div class="body">
+      <div class="dash-grid">
+        <div class="db dash-box"><div class="dbl">RPM</div><div class="dbv" id="d-rpm">4250</div><div class="rbar"><div class="rbf" id="d-rpm-bar" style="width:61%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">TPS</div><div class="dbv d" id="d-tps">78%</div><div class="rbar"><div class="rbf" id="d-tps-bar" style="width:78%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">AFR</div><div class="dbv" id="d-afr">13.2</div><div class="rbar"><div class="rbf" id="d-afr-bar" style="width:66%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">BOOST</div><div class="dbv" id="d-boost">8.4</div><div class="rbar"><div class="rbf" id="d-boost-bar" style="width:42%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">GEAR</div><div class="dbv" id="d-gear">3</div></div>
+        <div class="db dash-box"><div class="dbl">SPEED</div><div class="dbv d" id="d-spd">67</div><div class="rbar"><div class="rbf" id="d-spd-bar" style="width:34%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">WATER TEMP</div><div class="dbv d" id="d-water">91</div><div class="rbar"><div class="rbf" id="d-water-bar" style="width:39%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">OIL TEMP</div><div class="dbv d" id="d-oil">104</div><div class="rbar"><div class="rbf" id="d-oil-bar" style="width:55%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">OIL PRESSURE</div><div class="dbv d" id="d-oilp">42</div><div class="rbar"><div class="rbf" id="d-oilp-bar" style="width:70%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">FUEL LEVEL</div><div class="dbv d" id="d-fuel">68%</div><div class="rbar"><div class="rbf" id="d-fuel-bar" style="width:68%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">ENG LOAD</div><div class="dbv d" id="d-load">0.76</div><div class="rbar"><div class="rbf" id="d-load-bar" style="width:76%"></div></div></div>
+        <div class="db dash-box"><div class="dbl">FUEL MULT</div><div class="dbv d" id="d-mult">1.24</div><div class="rbar"><div class="rbf" id="d-mult-bar" style="width:41%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUEL TAB -->
+  <div class="tabpanel" id="tab-fuel">
+    <div class="toolbar">
+      <button class="mode-btn monitor" id="mode-btn">&#9679; MONITOR</button>
+      <div class="tl-sep"></div>
+      <span class="map-name">MAP-A / FUEL / LOAD vs RPM</span>
+      <div class="tl-right">
+        <span class="tl-hint" id="tl-hint">click edit to modify cells</span>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <div class="map-header">
+        <span class="map-title">FUEL MAP — MULTIPLIER TABLE</span>
+        <span class="badge live" id="map-badge">LIVE</span>
+        <span class="cell-coords" id="cell-coords"></span>
+        <button class="map-toggle-btn" id="map-toggle-btn">▲ HIDE</button>
+      </div>
+      <div id="map-body">
+        <div id="map-grid"></div>
+        <div class="map-footer">
+          <span class="mf-legend t">&#9679; LIVE CELL</span>
+          <span class="mf-legend a">&#9632; SELECTED</span>
+          <span class="mf-legend d" id="sel-count"></span>
+        </div>
+      </div>
+    </div>
+    <div class="edit-bar" id="edit-bar">
+      <span class="eb-info" id="eb-info">EDIT MODE OFF</span>
+      <div class="eb-sep"></div>
+      <span class="eb-val" id="eb-val">—</span>
+      <div class="eb-sep"></div>
+      <input class="eb-input" id="eb-input" type="number" placeholder="abs" step="0.1"/>
+      <button class="eb-btn" id="eb-set-btn">SET</button>
+      <div class="eb-sep"></div>
+      <span class="eb-hint" id="eb-hint">enable edit mode to modify</span>
+    </div>
+    <div class="gauges" style="margin-top:8px;">
+      <div class="db">
+        <div class="dbl">AFR</div>
+        <div style="display:flex;align-items:baseline;gap:4px;line-height:1;">
+          <span id="g-afr-target" style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--amber);">13.2</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);margin:0 1px;">/</span>
+          <span id="g-afr-eff" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:400;color:var(--text);">13.5</span>
+        </div>
+        <div class="rbar"><div class="rbf" id="g-afr-bar" style="width:66%;background:var(--teal);"></div></div>
+      </div>
+      <div class="db">
+        <div class="dbl">ENG LOAD</div>
+        <div class="dbv d" id="g-load">0.76</div>
+        <div class="rbar"><div class="rbf" id="g-load-bar" style="width:76%"></div></div>
+      </div>
+      <div class="db">
+        <div class="dbl">FUEL MULT</div>
+        <div class="dbv d" id="g-mult">1.24</div>
+        <div class="rbar"><div class="rbf" id="g-mult-bar" style="width:41%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timing Panel -->
+   <div class="tabpanel" id="tab-timing">
+  <div class="toolbar">
+    <button class="mode-btn monitor" id="t-mode-btn">&#9679; MONITOR</button>
+    <div class="tl-sep"></div>
+    <span class="map-name">MAP-A / TIMING / LOAD vs RPM</span>
+    <div class="tl-right">
+      <span class="tl-hint" id="t-tl-hint">click edit to modify cells</span>
+    </div>
+  </div>
+  <div class="map-wrap">
+    <div class="map-header">
+      <span class="map-title">TIMING MAP — DEGREES ADVANCE</span>
+      <span class="badge live" id="t-map-badge">LIVE</span>
+      <span class="cell-coords" id="t-cell-coords"></span>
+      <button class="map-toggle-btn" id="t-map-toggle-btn">▲ HIDE</button>
+    </div>
+    <div id="t-map-body">
+      <div id="t-map-grid"></div>
+      <div class="map-footer">
+        <span class="mf-legend t">&#9679; LIVE CELL</span>
+        <span class="mf-legend a">&#9632; SELECTED</span>
+        <span class="mf-legend d" id="t-sel-count"></span>
+      </div>
+    </div>
+  </div>
+  <div class="edit-bar" id="t-edit-bar">
+    <span class="eb-info" id="t-eb-info">EDIT MODE OFF</span>
+    <div class="eb-sep"></div>
+    <span class="eb-val" id="t-eb-val">—</span>
+    <div class="eb-sep"></div>
+    <input class="eb-input" id="t-eb-input" type="number" placeholder="deg" step="0.5"/>
+    <button class="eb-btn" id="t-eb-set-btn">SET</button>
+    <div class="eb-sep"></div>
+    <span class="eb-hint" id="t-eb-hint">enable edit mode to modify</span>
+  </div>
+  <<div class="gauges" style="margin-top:8px;">
+    <div class="db">
+      <div class="dbl">IGN ADV</div>
+      <div class="dbv" id="t-ign-adv">18.5°</div>
+    </div>
+    <div class="db">
+      <div class="dbl">ENG LOAD</div>
+      <div class="dbv d" id="t-load">0.76</div>
+      <div class="rbar"><div class="rbf" id="t-load-bar" style="width:76%"></div></div>
+    </div>
+    <div class="db">
+      <div class="dbl">KNOCK RETARD</div>
+      <div class="dbv" id="t-knock" style="color:var(--teal);">0.0°</div>
+      <div class="rbar"><div class="rbf" id="t-knock-bar" style="width:0%;background:var(--teal);"></div></div>
+    </div>
+  </div>
+
+  <!-- Scalar params panel -->
+  <div style="padding:0 12px 12px;display:flex;flex-direction:column;gap:6px;">
+    <div class="db" style="display:flex;align-items:center;gap:12px;padding:8px 12px;">
+      <span class="dbl" style="margin:0;min-width:100px;">CRANK TIMING</span>
+      <input id="t-crank-input" type="number" class="eb-input" style="width:56px;" value="10" step="1" min="0" max="20"/>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">DEG BTDC</span>
+      <button class="eb-btn" onclick="document.getElementById('t-crank-val').textContent=document.getElementById('t-crank-input').value+'°'">SET</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-left:auto;" id="t-crank-val">10°</span>
+    </div>
+    <div class="db" style="display:flex;align-items:center;gap:12px;padding:8px 12px;">
+      <span class="dbl" style="margin:0;min-width:100px;">HARD REV LIMIT</span>
+      <input id="t-revlimit-input" type="number" class="eb-input" style="width:64px;" value="6800" step="100" min="1000" max="9000"/>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">RPM</span>
+      <button class="eb-btn" onclick="document.getElementById('t-revlimit-val').textContent=document.getElementById('t-revlimit-input').value">SET</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-left:auto;" id="t-revlimit-val">6800</span>
+    </div>
+    <div class="db" style="display:flex;align-items:center;gap:12px;padding:8px 12px;">
+      <span class="dbl" style="margin:0;min-width:100px;">2-STEP RPM</span>
+      <input id="t-twostep-input" type="number" class="eb-input" style="width:64px;" value="3500" step="100" min="1000" max="8000"/>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">RPM</span>
+      <button class="eb-btn" onclick="document.getElementById('t-twostep-val').textContent=document.getElementById('t-twostep-input').value">SET</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);margin-left:auto;" id="t-twostep-val">3500</span>
+      <div class="tl-sep"></div>
+      <span class="dbl" style="margin:0;">ENABLE</span>
+      <div id="t-twostep-toggle" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'ON':'OFF'" style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);cursor:pointer;color:var(--dim);background:var(--bg);">OFF</div>
+    </div>
+  </div>
+</div>
+  <!-- COMING SOON TABS -->
+  <div class="tabpanel" id="tab-boost"><div class="coming-soon"><div class="cs-title">BOOST</div><div class="cs-sub">COMING SOON</div></div></div>
+  <div class="tabpanel" id="tab-safe"><div class="coming-soon"><div class="cs-title">SAFE</div><div class="cs-sub">COMING SOON</div></div></div>
+  <div class="tabpanel" id="tab-setup"><div class="coming-soon"><div class="cs-title">SETUP</div><div class="cs-sub">COMING SOON</div></div></div>
+  <div class="tabpanel" id="tab-logs"><div class="coming-soon"><div class="cs-title">LOGS / FAULTS</div><div class="cs-sub">COMING SOON</div></div></div>
+
+</div>
+
+<script>
+// ── FAKE LIVE DATA ──────────────────────────────────────────────
+var sim = {
+  rpm: 4250, tps: 78, afr: 13.2, effAfr: 13.5,
+  boost: 8.4, gear: '3', speed: 67,
+  water: 91, oil: 104, oilp: 42,
+  fuel: 68, load: 0.76, mult: 1.24,
+  ignAdv: 18.5, knock: 0.0
+}
+
+// Slowly drift values to feel alive
+setInterval(function() {
+  sim.rpm    = Math.max(800,  Math.min(7000, sim.rpm    + (Math.random()-0.5)*150))
+  sim.tps    = Math.max(0,    Math.min(100,  sim.tps    + (Math.random()-0.5)*3))
+  sim.afr    = Math.max(10,   Math.min(18,   sim.afr    + (Math.random()-0.5)*0.2))
+  sim.effAfr = Math.max(10,   Math.min(18,   sim.effAfr + (Math.random()-0.5)*0.15))
+  sim.boost  = Math.max(0,    Math.min(20,   sim.boost  + (Math.random()-0.5)*0.5))
+  sim.speed  = Math.max(0,    Math.min(200,  sim.speed  + (Math.random()-0.5)*2))
+  sim.water  = Math.max(70,   Math.min(115,  sim.water  + (Math.random()-0.5)*0.5))
+  sim.oil    = Math.max(80,   Math.min(130,  sim.oil    + (Math.random()-0.5)*0.5))
+  sim.load   = Math.max(0,    Math.min(1,    sim.load   + (Math.random()-0.5)*0.03))
+  var targetAdv = 8 + (sim.rpm/7000)*16 + sim.load*12
+  sim.ignAdv = Math.max(4,  Math.min(42,  sim.ignAdv + (targetAdv - sim.ignAdv)*0.15 + (Math.random()-0.5)*0.4))
+  sim.knock   = Math.random() < 0.04 ? (Math.random()*2.5).toFixed(1)*1 : Math.max(0, sim.knock - 0.3)
+  updateLiveDisplays()
+  if(activeTab === 'fuel') renderMap()
+  if(activeTab === 'timing') renderMap(timingMap)
+  setText('t-rpm', Math.round(sim.rpm))
+  setWidth('t-rpm-bar', pct(sim,rpm, 7000))
+  setText('t-load', sim.load.toFixed(2))
+  setWidth('t-load-bar', pct(sim.load, 1))
+}, 200)
+
+function pct(val, max){ return Math.min(100, Math.max(0, (val/max)*100)).toFixed(1)+'%' }
+function setText(id,v){ var e=document.getElementById(id); if(e) e.textContent=v }
+function setWidth(id,w){ var e=document.getElementById(id); if(e) e.style.width=w }
+
+function updateLiveDisplays() {
+  var rpmPct = pct(sim.rpm, 7000)
+  setText('d-rpm', Math.round(sim.rpm))
+  setWidth('d-rpm-bar', rpmPct)
+  setText('d-tps', Math.round(sim.tps)+'%')
+  setWidth('d-tps-bar', pct(sim.tps, 100))
+  setText('d-afr', sim.afr.toFixed(1))
+  setWidth('d-afr-bar', pct(sim.afr, 20))
+  setText('d-boost', sim.boost.toFixed(1))
+  setWidth('d-boost-bar', pct(sim.boost, 20))
+  setText('d-gear', sim.gear)
+  setText('d-spd', Math.round(sim.speed))
+  setWidth('d-spd-bar', pct(sim.speed, 200))
+  setText('d-water', Math.round(sim.water))
+  setWidth('d-water-bar', pct(sim.water - 60, 60))
+  setText('d-oil', Math.round(sim.oil))
+  setWidth('d-oil-bar', pct(sim.oil - 60, 70))
+  setText('d-oilp', Math.round(sim.oilp))
+  setText('d-fuel', sim.fuel+'%')
+  setWidth('d-fuel-bar', pct(sim.fuel, 100))
+  setText('d-load', sim.load.toFixed(2))
+  setWidth('d-load-bar', pct(sim.load, 1))
+  setText('d-mult', sim.mult.toFixed(2))
+  setWidth('d-mult-bar', pct(sim.mult, 3))
+
+  // sensor strip
+  setText('s-rpm', Math.round(sim.rpm))
+  setText('s-tps', Math.round(sim.tps)+'%')
+  setText('s-afr', sim.afr.toFixed(1))
+  setText('s-boost', sim.boost.toFixed(1))
+  setText('s-gear', sim.gear)
+  setText('s-spd', Math.round(sim.speed))
+  setText('s-water', Math.round(sim.water))
+  setText('s-oil', Math.round(sim.oil))
+  setText('s-oilp', Math.round(sim.oilp))
+
+  // Timing Tab Guages
+  var knockColor = sim.knock > 1.5 ? 'var(--red)' : sim.knock > 0.5 ? 'var(--amber)' : 'var(--teal)'
+  var ignEl = document.getElementById('t-ign-adv')
+  if(ignEl){ ignEl.textContent = sim.ignAdv.toFixed(1)+'°'; ignEl.style.color = 'var(--teal)' }
+  var knockEl = document.getElementById('t-knock')
+  if(knockEl){ knockEl.textContent = sim.knock > 0 ? '-'+sim.knock.toFixed(1)+'°' : '0.0°'; knockEl.style.color = knockColor }
+  var knockBar = document.getElementById('t-knock-bar')
+  if(knockBar){ knockBar.style.width = pct(sim.knock, 5); knockBar.style.background = knockColor }
+  setText('t-load', sim.load.toFixed(2))
+  setWidth('t-load-bar', pct(sim.load, 1))
+
+  // fuel tab gauges
+  setText('g-afr-target', sim.afr.toFixed(1))
+  setText('g-afr-eff', sim.effAfr.toFixed(1))
+  var diff = Math.abs(sim.effAfr - sim.afr)
+  var afrColor = diff < 0.5 ? 'var(--teal)' : diff < 1.5 ? 'var(--amber)' : 'var(--red)'
+  var bar = document.getElementById('g-afr-bar')
+  if(bar){ bar.style.width = pct(sim.effAfr, 20); bar.style.background = afrColor }
+  setText('g-load', sim.load.toFixed(2))
+  setWidth('g-load-bar', pct(sim.load, 1))
+  setText('g-mult', sim.mult.toFixed(2))
+  setWidth('g-mult-bar', pct(sim.mult, 3))
+}
+
+// ── TAB SWITCHING ───────────────────────────────────────────────
+var activeTab = 'dash'
+var STRIP_TABS = ['fuel','timing','boost','safe']
+
+document.querySelectorAll('.htab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var name = this.dataset.tab
+    document.querySelectorAll('.htab').forEach(function(t){ t.classList.remove('active') })
+    document.querySelectorAll('.tabpanel').forEach(function(p){ p.classList.remove('active') })
+    this.classList.add('active')
+    document.getElementById('tab-'+name).classList.add('active')
+    document.getElementById('sstrip').style.display = STRIP_TABS.indexOf(name) >= 0 ? 'flex' : 'none'
+    activeTab = name
+    if(name === 'fuel') renderMap(fuelMap)
+    if(name === 'timing') renderMap(timingMap)
+  })
+})
+
+// ── MAP EDITOR FACTORY ─────────────────────────────────────────
+var RPM_COLS  = [1000,2000,3000,4000,5000,6000]
+var LOAD_ROWS = [100,80,60,40,20,0]
+
+function createMapEditor(tabName, rpmCols, loadRows, defaultVal, minVal, maxVal, gridId, badgeId, coordsId, toggleBtnId, mapBodyId, editBarId, modeBtnId, tlHintId, selCountId, ebInfoId, ebValId, ebHintId, ebInputId, ebSetBtnId) {
+  var m = {
+    mapData: [], selected: new Set(), dragStart: null,
+    editMode: false, inputtingCell: null, mapVisible: true,
+    rpmCols: rpmCols, loadRows: loadRows,
+    defaultVal: defaultVal, minVal: minVal, maxVal: maxVal,
+    tabName: tabName,
+    gridId: gridId, badgeId: badgeId, coordsId: coordsId,
+    toggleBtnId: toggleBtnId, mapBodyId: mapBodyId, editBarId: editBarId,
+    modeBtnId: modeBtnId, tlHintId: tlHintId, selCountId: selCountId,
+    ebInfoId: ebInfoId, ebValId: ebValId, ebHintId: ebHintId,
+    ebInputId: ebInputId, ebSetBtnId: ebSetBtnId
+  }
+
+  for(var ri=0; ri<loadRows.length; ri++) {
+    m.mapData[ri] = []
+    for(var ci=0; ci<rpmCols.length; ci++) m.mapData[ri][ci] = defaultVal
+  }
+
+  return m
+}
+
+function cellKey(r,c){ return r+','+c }
+function parseKey(k){ var p=k.split(','); return[+p[0],+p[1]] }
+
+function getColorClass(v, minVal, maxVal){
+  var norm = (v - minVal) / (maxVal - minVal)
+  if(norm>=0.875)return'v7'; if(norm>=0.75)return'v6'; if(norm>=0.625)return'v5';
+  if(norm>=0.5)return'v4';   if(norm>=0.375)return'v3'; if(norm>=0.25)return'v2';
+  if(norm>=0.125)return'v1'; return'v0';
+}
+
+function renderMap(m) {
+  var liveRpmIdx=0, liveLoadIdx=0
+  m.rpmCols.forEach(function(r,i){ if(sim.rpm>=r) liveRpmIdx=i })
+  m.loadRows.forEach(function(l,ri){ if(sim.tps<=l) liveLoadIdx=ri })
+
+  var grid=document.getElementById(m.gridId)
+  if(!grid) return
+  grid.innerHTML=''
+
+  var hdrRow=document.createElement('div')
+  hdrRow.style.cssText='display:flex;gap:3px;margin-bottom:3px;padding-left:32px;'
+  m.rpmCols.forEach(function(rpm,i){
+    var h=document.createElement('div')
+    h.className='axl'+(i===liveRpmIdx?' live-col':'')
+    h.style.flex='1'
+    h.textContent=rpm
+    hdrRow.appendChild(h)
+  })
+  grid.appendChild(hdrRow)
+
+  m.loadRows.forEach(function(load,ri){
+    var row=document.createElement('div')
+    row.className='map-row'
+    var lbl=document.createElement('div')
+    lbl.className='row-lbl'
+    lbl.textContent=load
+    row.appendChild(lbl)
+
+    m.rpmCols.forEach(function(rpm,ci){
+      var cell=document.createElement('div')
+      var k=cellKey(ri,ci)
+      var isLive=ri===liveLoadIdx&&ci===liveRpmIdx
+      var isSel=m.selected.has(k)
+      var val=(m.mapData[ri]&&m.mapData[ri][ci]!==undefined)?m.mapData[ri][ci]:m.defaultVal
+      var cls='cell '+getColorClass(val, m.minVal, m.maxVal)
+      if(m.editMode) cls+=' can-edit'
+      if(isLive) cls+=' live-cell'
+      if(isSel) cls+=' selected'
+      cell.className=cls
+
+      if(isSel&&m.inputtingCell===k){
+        var inp=document.createElement('input')
+        inp.className='cell-input'
+        inp.type='number'
+        inp.value=val
+        inp.addEventListener('keydown',function(e){
+          if(e.key==='Enter'){ commitInline(m,ri,ci,inp.value); e.preventDefault() }
+          if(e.key==='Escape'){ m.inputtingCell=null; renderMap(m) }
+          e.stopPropagation()
+        })
+        inp.addEventListener('click',function(e){ e.stopPropagation() })
+        cell.appendChild(inp)
+        setTimeout(function(){ inp.focus(); inp.select() },10)
+      } else {
+        cell.textContent=val.toFixed(2)
+      }
+
+      if(m.editMode){
+        cell.addEventListener('mousedown',function(e){ onCellMouseDown(e,m,ri,ci) })
+        cell.addEventListener('mouseenter',function(e){ onCellEnter(e,m,ri,ci) })
+        cell.addEventListener('dblclick',function(e){ onCellDblClick(e,m,ri,ci) })
+      }
+      row.appendChild(cell)
+    })
+    grid.appendChild(row)
+  })
+
+  var sc=document.getElementById(m.selCountId)
+  if(sc) sc.textContent=m.selected.size?m.selected.size+' CELL'+(m.selected.size>1?'S':'')+' SELECTED':''
+  var cc=document.getElementById(m.coordsId)
+  if(cc){
+    if(m.selected.size===1){ var rc=parseKey([...m.selected][0]); cc.textContent=m.rpmCols[rc[1]]+' RPM / '+m.loadRows[rc[0]]+'% LOAD' }
+    else if(m.selected.size>1) cc.textContent=m.selected.size+' CELLS'
+    else cc.textContent=''
+  }
+}
+
+function onCellMouseDown(e,m,ri,ci){
+  if(!m.editMode) return
+  e.preventDefault()
+  m.inputtingCell=null
+  if(!e.shiftKey) m.selected.clear()
+  m.selected.add(cellKey(ri,ci))
+  m.dragStart={r:ri,c:ci}
+  renderMap(m); updateEditBar(m)
+}
+
+function onCellEnter(e,m,ri,ci){
+  if(!m.editMode||!e.buttons) return
+  if(m.dragStart){
+    var minR=Math.min(m.dragStart.r,ri),maxR=Math.max(m.dragStart.r,ri)
+    var minC=Math.min(m.dragStart.c,ci),maxC=Math.max(m.dragStart.c,ci)
+    m.selected.clear()
+    for(var r=minR;r<=maxR;r++) for(var c=minC;c<=maxC;c++) m.selected.add(cellKey(r,c))
+    renderMap(m); updateEditBar(m)
+  }
+}
+
+function onCellDblClick(e,m,ri,ci){
+  if(!m.editMode) return
+  e.stopPropagation()
+  m.selected.clear()
+  m.selected.add(cellKey(ri,ci))
+  m.inputtingCell=cellKey(ri,ci)
+  renderMap(m); updateEditBar(m)
+}
+
+function commitInline(m,ri,ci,val){
+  var v=parseFloat(val)
+  if(!isNaN(v)){ if(!m.mapData[ri]) m.mapData[ri]=[]; m.mapData[ri][ci]=Math.max(m.minVal,Math.min(m.maxVal,v)) }
+  m.inputtingCell=null
+  renderMap(m); updateEditBar(m)
+}
+
+function updateEditBar(m){
+  var info=document.getElementById(m.ebInfoId)
+  var val=document.getElementById(m.ebValId)
+  var hint=document.getElementById(m.ebHintId)
+  var inp=document.getElementById(m.ebInputId)
+  if(!info) return
+  if(!m.editMode){
+    info.textContent='EDIT MODE OFF'; val.textContent='—'
+    hint.textContent='enable edit mode to modify'; inp.disabled=true; inp.value=''; return
+  }
+  inp.disabled=m.selected.size===0
+  if(m.selected.size===0){
+    info.textContent='NO SELECTION'; val.textContent='—'; hint.textContent='click or drag to select cells'
+  } else if(m.selected.size===1){
+    var rc=parseKey([...m.selected][0])
+    info.textContent=m.rpmCols[rc[1]]+' RPM / '+m.loadRows[rc[0]]+'% LOAD'
+    val.textContent=m.mapData[rc[0]][rc[1]].toFixed(2)
+    hint.textContent='+/−  ·  ↑↓ keys  ·  dbl-click to type  ·  or SET below'
+  } else {
+    var vals=[...m.selected].map(function(k){ var rc=parseKey(k); return m.mapData[rc[0]][rc[1]] })
+    var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals)
+    info.textContent=m.selected.size+' CELLS SELECTED'
+    val.textContent=mn===mx?mn.toFixed(2):mn.toFixed(2)+'–'+mx.toFixed(2)
+    hint.textContent='+/−  ·  ↑↓ keys  ·  or SET absolute below'
+  }
+}
+
+function wireMapEditor(m) {
+  var modeBtn = document.getElementById(m.modeBtnId)
+  if(modeBtn) modeBtn.addEventListener('click', function(){
+    m.editMode = !m.editMode
+    m.selected.clear(); m.inputtingCell = null
+    this.textContent = m.editMode ? '✎ EDIT MODE' : '● MONITOR'
+    this.className = 'mode-btn ' + (m.editMode ? 'edit' : 'monitor')
+    var badge = document.getElementById(m.badgeId)
+    if(badge){ badge.textContent = m.editMode ? 'EDIT MODE' : 'LIVE'; badge.className = 'badge ' + (m.editMode ? 'edit-badge' : 'live') }
+    var tlHint = document.getElementById(m.tlHintId)
+    if(tlHint) tlHint.textContent = m.editMode ? 'click or drag to select — +/− or ↑↓ to adjust' : 'click edit to modify cells'
+    updateEditBar(m); renderMap(m)
+  })
+
+  var toggleBtn = document.getElementById(m.toggleBtnId)
+  if(toggleBtn) toggleBtn.addEventListener('click', function(){
+    m.mapVisible = !m.mapVisible
+    var mapBody = document.getElementById(m.mapBodyId)
+    var editBar = document.getElementById(m.editBarId)
+    if(mapBody) mapBody.style.display = m.mapVisible ? '' : 'none'
+    if(editBar) editBar.style.display = m.mapVisible ? '' : 'none'
+    this.textContent = m.mapVisible ? '▲ HIDE' : '▼ SHOW'
+  })
+
+  var setBtn = document.getElementById(m.ebSetBtnId)
+  if(setBtn) setBtn.addEventListener('click', function(){
+    var inp = document.getElementById(m.ebInputId)
+    var v = parseFloat(inp.value)
+    if(isNaN(v)||m.selected.size===0) return
+    m.selected.forEach(function(k){
+      var rc=parseKey(k)
+      if(!m.mapData[rc[0]]) m.mapData[rc[0]]=[]
+      m.mapData[rc[0]][rc[1]]=Math.max(m.minVal,Math.min(m.maxVal,v))
+    })
+    inp.value=''; renderMap(m); updateEditBar(m)
+  })
+}
+
+// ── CREATE MAP EDITORS ─────────────────────────────────────────
+var fuelMap = createMapEditor(
+  'fuel', RPM_COLS, LOAD_ROWS, 1.0, 0, 5,
+  'map-grid','map-badge','cell-coords','map-toggle-btn','map-body','edit-bar',
+  'mode-btn','tl-hint','sel-count','eb-info','eb-val','eb-hint','eb-input','eb-set-btn'
+)
+
+var timingMap = createMapEditor(
+  'timing', RPM_COLS, LOAD_ROWS, 15.0, 0, 45,
+  't-map-grid','t-map-badge','t-cell-coords','t-map-toggle-btn','t-map-body','t-edit-bar',
+  't-mode-btn','t-tl-hint','t-sel-count','t-eb-info','t-eb-val','t-eb-hint','t-eb-input','t-eb-set-btn'
+)
+
+// seed timing map with realistic values
+;(function(){
+  var base = [
+    [10,12,14,16,18,20],
+    [12,14,16,18,22,26],
+    [14,16,20,24,28,30],
+    [16,20,24,28,30,32],
+    [18,22,26,30,32,34],
+    [20,24,28,32,34,36]
+  ]
+  for(var ri=0;ri<6;ri++) for(var ci=0;ci<6;ci++) timingMap.mapData[ri][ci]=base[ri][ci]
+})()
+
+// wire up both after DOM ready
+wireMapEditor(fuelMap)
+wireMapEditor(timingMap)
+
+// ── MOUSE / KEYBOARD GLOBAL HANDLERS ──────────────────────────
+document.addEventListener('mouseup', function(){ 
+  fuelMap.dragStart = null
+  timingMap.dragStart = null
+})
+
+document.addEventListener('keydown', function(e){
+  var m = activeTab === 'fuel' ? fuelMap : activeTab === 'timing' ? timingMap : null
+  if(!m||!m.editMode||m.selected.size===0) return
+  if(e.key==='Escape'){ m.selected.clear(); m.inputtingCell=null; renderMap(m); updateEditBar(m); return }
+  var delta=0
+  if(e.key==='ArrowUp'||e.key==='+') delta=0.1
+  if(e.key==='ArrowDown'||e.key==='-') delta=-0.1
+  if(delta!==0){
+    e.preventDefault()
+    m.selected.forEach(function(k){
+      var rc=parseKey(k)
+      if(!m.mapData[rc[0]]) m.mapData[rc[0]]=[]
+      m.mapData[rc[0]][rc[1]]=Math.max(m.minVal,Math.min(m.maxVal,Math.round((m.mapData[rc[0]][rc[1]]+delta)*100)/100))
+    })
+    renderMap(m); updateEditBar(m)
+  }
+})
+
+</script>
+</body>
+</html>

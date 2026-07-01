@@ -1,0 +1,10 @@
+{
+    "jtech_R1": {
+        "information": {
+            "authors": "JTECH Performance",
+            "name": "JTECH R1 ECU",
+            "value": 499
+        },
+        "slotType": "jtech_ecu"
+    }
+}
