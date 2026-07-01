@@ -1,5 +1,5 @@
 # JTECH Performance — HX3 ECU Display & Tuning Mod
-**Version 0.2.1** | BeamNG.drive | by JTECH Performance
+**Version 1.6.2** | BeamNG.drive | by JTECH Performance
 
 ---
 
