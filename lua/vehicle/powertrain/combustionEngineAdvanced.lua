@@ -2146,10 +2146,12 @@ local function initSounds(device, jbeamData)
 end
 
 local function new(jbeamData)
-  local f = "empty"
-  for k, va in pairs(v.data.activeParts) do
-	if (string.find(k, "ecu")) then f = k end
-  end
+local f = "empty"
+for k, va in pairs(v.data.activeParts) do
+    if string.find(k, "ecu") or string.find(k, "^jtech_r%d") then f = k end
+end
+log('I', 'combustionEngineAdvanced', 'ECU part detection result: ' .. tostring(f))
+
 
   local device = {
     

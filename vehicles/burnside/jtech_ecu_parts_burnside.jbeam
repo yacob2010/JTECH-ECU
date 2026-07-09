@@ -1,0 +1,74 @@
+{
+  "jtech_r1_burnside_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "burnside_engine_i6_ecu"
+  },
+  "jtech_r2_burnside_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "burnside_engine_i6_ecu"
+  },
+  "jtech_r3_burnside_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "burnside_engine_i6_ecu"
+  },
+  "jtech_r1_burnside_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "burnside_engine_ecu"
+  },
+  "jtech_r2_burnside_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "burnside_engine_ecu"
+  },
+  "jtech_r3_burnside_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "burnside_engine_ecu"
+  },
+  "jtech_r1_burnside_v8_flathead": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "burnside_ecu_v8_flathead"
+  },
+  "jtech_r2_burnside_v8_flathead": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "burnside_ecu_v8_flathead"
+  },
+  "jtech_r3_burnside_v8_flathead": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "burnside_ecu_v8_flathead"
+  }
+}

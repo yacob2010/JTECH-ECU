@@ -1,0 +1,50 @@
+{
+  "jtech_r1_bastion_v6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bastion_v6_ecu"
+  },
+  "jtech_r2_bastion_v6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bastion_v6_ecu"
+  },
+  "jtech_r3_bastion_v6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bastion_v6_ecu"
+  },
+  "jtech_r1_bastion_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bastion_v8_ecu"
+  },
+  "jtech_r2_bastion_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bastion_v8_ecu"
+  },
+  "jtech_r3_bastion_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bastion_v8_ecu"
+  }
+}

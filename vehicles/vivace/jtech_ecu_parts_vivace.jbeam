@@ -1,0 +1,122 @@
+{
+  "jtech_r1_vivace_i3": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "vivace_engine_ecu_i3_1.2"
+  },
+  "jtech_r2_vivace_i3": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "vivace_engine_ecu_i3_1.2"
+  },
+  "jtech_r3_vivace_i3": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "vivace_engine_ecu_i3_1.2"
+  },
+  "jtech_r1_vivace_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "vivace_engine_ecu_i4_1.5_diesel"
+  },
+  "jtech_r2_vivace_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "vivace_engine_ecu_i4_1.5_diesel"
+  },
+  "jtech_r3_vivace_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "vivace_engine_ecu_i4_1.5_diesel"
+  },
+  "jtech_r1_vivace_i4_1_6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "vivace_engine_ecu_i4_1.6"
+  },
+  "jtech_r2_vivace_i4_1_6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "vivace_engine_ecu_i4_1.6"
+  },
+  "jtech_r3_vivace_i4_1_6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "vivace_engine_ecu_i4_1.6"
+  },
+  "jtech_r1_vivace_i4_2_0_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "vivace_engine_ecu_i4_2.0_diesel"
+  },
+  "jtech_r2_vivace_i4_2_0_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "vivace_engine_ecu_i4_2.0_diesel"
+  },
+  "jtech_r3_vivace_i4_2_0_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "vivace_engine_ecu_i4_2.0_diesel"
+  },
+  "jtech_r1_vivace_i5": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "vivace_engine_ecu_i5"
+  },
+  "jtech_r2_vivace_i5": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "vivace_engine_ecu_i5"
+  },
+  "jtech_r3_vivace_i5": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "vivace_engine_ecu_i5"
+  }
+}

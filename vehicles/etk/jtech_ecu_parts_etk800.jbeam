@@ -1,0 +1,98 @@
+{
+  "jtech_r1_etk800_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "etk_engine_i4_2.0_diesel"
+  },
+  "jtech_r2_etk800_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "etk_engine_i4_2.0_diesel"
+  },
+  "jtech_r3_etk800_i4_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "etk_engine_i4_2.0_diesel"
+  },
+  "jtech_r1_etk800_i4_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "etk_engine_i4_2.0_petrol"
+  },
+  "jtech_r2_etk800_i4_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "etk_engine_i4_2.0_petrol"
+  },
+  "jtech_r3_etk800_i4_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "etk_engine_i4_2.0_petrol"
+  },
+  "jtech_r1_etk800_i6_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "etk_engine_i6_3.0_diesel"
+  },
+  "jtech_r2_etk800_i6_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "etk_engine_i6_3.0_diesel"
+  },
+  "jtech_r3_etk800_i6_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "etk_engine_i6_3.0_diesel"
+  },
+  "jtech_r1_etk800_i6_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "etk_engine_i6_3.0_petrol"
+  },
+  "jtech_r2_etk800_i6_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "etk_engine_i6_3.0_petrol"
+  },
+  "jtech_r3_etk800_i6_petrol": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "etk_engine_i6_3.0_petrol"
+  }
+}

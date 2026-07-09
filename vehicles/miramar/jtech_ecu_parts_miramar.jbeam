@@ -1,0 +1,26 @@
+{
+  "jtech_r1_miramar_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "miramar_engine_ecu"
+  },
+  "jtech_r2_miramar_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "miramar_engine_ecu"
+  },
+  "jtech_r3_miramar_base": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "miramar_engine_ecu"
+  }
+}
