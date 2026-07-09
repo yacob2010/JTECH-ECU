@@ -1,0 +1,10 @@
+{
+    "jtech_R3": {
+        "information": {
+            "authors": "JTECH Performance",
+            "name": "JTECH R3 ECU",
+            "value": 1499
+        },
+        "slotType": "jtech_ecu"
+        }
+    }

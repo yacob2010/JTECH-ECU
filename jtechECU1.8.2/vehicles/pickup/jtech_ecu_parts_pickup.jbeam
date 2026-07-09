@@ -1,0 +1,99 @@
+{
+  "jtech_r1_pickup_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "pickup_engine_i6_ecu"
+  },
+  "jtech_r2_pickup_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "pickup_engine_i6_ecu"
+  },
+  "jtech_r3_pickup_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "pickup_engine_i6_ecu"
+  },
+    "jtech_r1_pickup_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "pickup_engine_v8_ecu"
+  },
+  "jtech_r2_pickup_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "pickup_engine_v8_ecu"
+  },
+  "jtech_r3_pickup_v8": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "pickup_engine_v8_ecu"
+  },
+    "jtech_r1_pickup_v8_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "pickup_engine_v8_diesel_ecu"
+  },
+  "jtech_r2_pickup_v8_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "pickup_engine_v8_diesel_ecu"
+  },
+  "jtech_r3_pickup_v8_diesel": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "pickup_engine_v8_diesel_ecu"
+  },
+    "jtech_r1_pickup_v8_6.9": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "pickup_engine_v8_6.9_ecu"
+  },
+  "jtech_r2_pickup_v8_6.9": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "pickup_engine_v8_6.9_ecu"
+  },
+  "jtech_r3_pickup_v8_6.9": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "pickup_engine_v8_6.9_ecu"
+  }
+}
+

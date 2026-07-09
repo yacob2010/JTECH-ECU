@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JTECH HX3 Prototype</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--bg:#0B0D10;--bg2:#0e1116;--bg3:#0d1014;--text:#E6E6E6;--dim:#8A8F98;--border:#1E2229;--teal:#00E5A0;--amber:#F0A500;--red:#E84040;}
+*{box-sizing:border-box;margin:0;padding:0;}
+.root{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:4px;overflow:hidden;font-family:Inter,sans-serif;user-select:none;}
+.hdr{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;}
+.logo{font-family:Inter,sans-serif;font-weight:500;font-size:12px;color:var(--text);letter-spacing:.08em;}
+.slash{display:inline-block;width:1px;height:13px;background:var(--teal);transform:rotate(20deg);opacity:.7;margin:0 2px;}
+.model{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;}
+.status{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--teal);display:flex;align-items:center;gap:5px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--teal);}
+.tbar{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:stretch;}
+.htab{flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.08em;border-right:1px solid var(--border);cursor:pointer;position:relative;transition:color 160ms;min-width:0;}
+.htab:last-child{border-right:none;}
+.htab.active{color:var(--teal);background:#0b0e13;}
+.htab.active::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--teal);}
+.sstrip{height:40px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 10px;gap:0;overflow-x:auto;}
+.si{display:flex;flex-direction:column;gap:1px;padding:0 8px;flex-shrink:0;}
+.si:first-child{padding-left:0;}
+.slbl{font-size:8px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.1em;}
+.sval{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:var(--teal);line-height:1;}
+.sval.w{color:var(--amber)}.sval.n{color:var(--text);}
+.ssep{width:1px;height:16px;background:#2a2f38;transform:rotate(20deg);flex-shrink:0;}
+.body{padding:12px;display:flex;flex-direction:column;gap:10px;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.dash-box{padding:14px 12px;}
+.dash-box .dbv{font-size:28px;}
+.dash-box .dbl{font-size:10px;margin-bottom:6px;}
+.db{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:8px 10px;}
+.db.warn{border-color:var(--amber);}
+.dbl{font-size:9px;font-family:Inter,sans-serif;font-weight:500;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.dbv{font-family:"JetBrains Mono",monospace;font-size:20px;font-weight:700;color:var(--teal);line-height:1;}
+.dbv.a{color:var(--amber)}.dbv.d{color:var(--text);font-weight:400;font-size:16px;}
+.rbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:5px;}
+.rbf{height:100%;border-radius:2px;background:var(--teal);}
+.rbf.w{background:var(--amber);}
+</style>
+</head>
+<script>
+document.querySelectorAll('.htab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.htab').forEach(t => t.classList.remove('active'))
+        document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none')
+        this.classList.add('active')
+        var target = this.getAttribute('data-target')
+        var panel = document.querySelector('[data-tab="' + target + '"]')
+        if (panel) panel.style.display = 'block'
+    })
+})
+</script>
+<body style="background:#1a1a1a;padding:20px;">
+<div style="width:520px;" class="root">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <span class="logo">JTECH</span>
+    <span class="slash"></span>
+    <span class="model">HX3</span>
+    <div class="status"><span class="sdot"></span> ECU LINK ACTIVE</div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tbar">
+    <div class="htab active" data-target="dash">DASH</div>
+    <div class="htab" data-target="fuel">FUEL</div>
+    <div class="htab" data-target="timing">TIMING</div>
+    <div class="htab" data-target="boost">BOOST</div>
+    <div class="htab" data-target="safe">SAFE</div>
+    <div class="htab" data-target="setup">SETUP</div>
+    <div class="htab" data-target="logs">LOGS</div>
+  </div>
+
+  <!-- SENSOR STRIP -->
+  <div class="sstrip">
+    <div class="si"><span class="slbl">RPM</span><span class="sval">4250</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">TPS</span><span class="sval n">78%</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">AFR</span><span class="sval">13.2</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">BOOST</span><span class="sval">8.4</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">GEAR</span><span class="sval">3</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">SPD</span><span class="sval n">67</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">WATER</span><span class="sval n">91</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">OIL</span><span class="sval n">104</span></div>
+    <div class="ssep"></div>
+    <div class="si"><span class="slbl">OIL P</span><span class="sval n">42</span></div>
+  </div>
+
+  <!-- DASH BODY -->
+  <div class="tab-panel" data-tab="dash">
+  <div class="body">
+    <div class="dash-grid">
+      <div class="db dash-box"><div class="dbl">RPM</div><div class="dbv">4250</div><div class="rbar"><div class="rbf" style="width:61%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">TPS</div><div class="dbv d">78%</div><div class="rbar"><div class="rbf" style="width:78%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">AFR</div><div class="dbv">13.2</div><div class="rbar"><div class="rbf" style="width:66%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">BOOST</div><div class="dbv">8.4</div><div class="rbar"><div class="rbf" style="width:42%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">GEAR</div><div class="dbv">3</div></div>
+      <div class="db dash-box"><div class="dbl">SPEED</div><div class="dbv d">67</div><div class="rbar"><div class="rbf" style="width:34%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">WATER TEMP</div><div class="dbv d">91</div><div class="rbar"><div class="rbf" style="width:39%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">OIL TEMP</div><div class="dbv d">104</div><div class="rbar"><div class="rbf" style="width:55%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">OIL PRESSURE</div><div class="dbv d">42</div><div class="rbar"><div class="rbf" style="width:70%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">FUEL LEVEL</div><div class="dbv d">68%</div><div class="rbar"><div class="rbf" style="width:68%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">ENG LOAD</div><div class="dbv d">0.76</div><div class="rbar"><div class="rbf" style="width:76%"></div></div></div>
+      <div class="db dash-box"><div class="dbl">FUEL MULT</div><div class="dbv d">1.24</div><div class="rbar"><div class="rbf" style="width:41%"></div></div></div>
+    </div>
+  </div>
+  </div>
+
+<div class="tab-panel" data-tab="fuel" style="display:none">
+    <div class="body">
+        <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">FUEL — coming soon</div>
+    </div>
+</div>
+
+<div class="tab-panel" data-tab="timing" style="display:none">
+  <div class="body">
+    <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">TIMING — coming soon</div>
+  </div>
+</div>
+
+<div class="tab-panel" data-tab="boost" style="display:none">
+  <div class="body">
+    <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">BOOST — coming soon</div>
+  </div>
+</div>
+
+<div class="tab-panel" data-tab="safe" style="display:none">
+  <div class="body">
+    <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">SAFE — coming soon</div>
+  </div>
+</div>
+
+<div class="tab-panel" data-tab="setup" style="display:none">
+  <div class="body">
+    <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">SETUP — coming soon</div>
+  </div>
+</div>
+
+<div class="tab-panel" data-tab="logs" style="display:none">
+  <div class="body">
+    <div style="color:var(--dim);font-size:11px;font-family:'JetBrains Mono',monospace;padding:20px 0;text-align:center;">LOGS — coming soon</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

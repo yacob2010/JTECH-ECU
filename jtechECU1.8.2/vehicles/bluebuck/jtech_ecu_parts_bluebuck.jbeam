@@ -1,0 +1,98 @@
+{
+  "jtech_r1_bluebuck_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bluebuck_engine_i6_ecu"
+  },
+  "jtech_r2_bluebuck_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bluebuck_engine_i6_ecu"
+  },
+  "jtech_r3_bluebuck_i6": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bluebuck_engine_i6_ecu"
+  },
+  "jtech_r1_bluebuck_v8_big": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bluebuck_engine_v8_big_ecu"
+  },
+  "jtech_r2_bluebuck_v8_big": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bluebuck_engine_v8_big_ecu"
+  },
+  "jtech_r3_bluebuck_v8_big": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bluebuck_engine_v8_big_ecu"
+  },
+  "jtech_r1_bluebuck_v8_medium": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bluebuck_engine_v8_medium_ecu"
+  },
+  "jtech_r2_bluebuck_v8_medium": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bluebuck_engine_v8_medium_ecu"
+  },
+  "jtech_r3_bluebuck_v8_medium": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bluebuck_engine_v8_medium_ecu"
+  },
+  "jtech_r1_bluebuck_v8_small": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R1 ECU",
+      "value": 499
+    },
+    "slotType": "bluebuck_engine_v8_small_ecu"
+  },
+  "jtech_r2_bluebuck_v8_small": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R2 ECU",
+      "value": 899
+    },
+    "slotType": "bluebuck_engine_v8_small_ecu"
+  },
+  "jtech_r3_bluebuck_v8_small": {
+    "information": {
+      "authors": "JTECH Performance",
+      "name": "JTECH R3 ECU",
+      "value": 1499
+    },
+    "slotType": "bluebuck_engine_v8_small_ecu"
+  }
+}
